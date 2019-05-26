@@ -1,0 +1,111 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 100%;
+  background-color: #ffffff;
+}
+
+.returned {
+  /* border: 2px solid black; */
+  /* padding: 5px; */
+  border: none;
+  margin: 5px;
+  width: 235px;
+  height: 445px;
+  text-align: center;
+  list-style: none;
+  /* flex-grow: 1; */
+}
+
+.genres {
+  font-size: 10px;
+  pointer-events: none;
+  background-color: #ffffff;
+  border-radius: 25px;
+  padding: 4px;
+  margin: 2px;
+}
+
+body {
+  font-family: "Slabo 27px", serif;
+  text-align: center;
+  background-color: #333333;
+}
+
+.animeTitle {
+  height: 45px;
+  margin: 5 0;
+}
+
+.coverImage {
+  width: 225px;
+  height: 317px;
+}
+
+#logo {
+  margin: 5px;
+  padding: 5px;
+  color: #ffffff;
+}
+
+#logo {
+  font-weight: 500;
+  font-size: 70px;
+  font-family: "Righteous", cursive;
+}
+
+#tagline {
+  padding: 20px 0;
+  font-size: 25px;
+  width: 100%;
+  color: white;
+  background-color: #ff6666;
+  text-transform: capitalize;
+}
+
+.selector {
+  margin: 10px 5px;
+  height: 40px;
+  padding: 0 15px;
+  font-size: 14px;
+  border-radius: 25px;
+  border: none;
+  color: white;
+  background-color: #0099ff;
+  text-transform: capitalize;
+}
+
+.selector:hover {
+  background-color: #61b7f0;
+}
+
+.selector.selected {
+  background-color: #ff6666;
+}
+
+.selector.selected:hover {
+  background-color: #ff9494;
+}
+
+.returnedByGenre {
+  list-style: none;
+  border: 1px solid black;
+}
+
+.checkboxes {
+  border: 1px solid black;
+  margin: 5px;
+}
