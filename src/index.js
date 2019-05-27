@@ -5,35 +5,7 @@ import "./styles.css";
 
 import AnimeCard from "./AnimeCard";
 import DaySelector from "./DaySelector";
-
-const animeGenres = [
-  "Action",
-  "Adventure",
-  "Comedy",
-  "Drama",
-  "Ecchi",
-  "Fantasy",
-  "Game",
-  "Harem",
-  "Historical",
-  "Horror",
-  "Kids",
-  "Magic",
-  "Mecha",
-  "Music",
-  "Mystery",
-  "Parody",
-  "Romance",
-  "Samurai",
-  "School",
-  "Sci-Fi",
-  "Seinen",
-  "Shoujo",
-  "Shounen",
-  "Slice of Life",
-  "Sports",
-  "Supernatural"
-];
+import GenreSelector from "./GenreSelector";
 
 class App extends React.Component {
   constructor(props) {
@@ -89,7 +61,9 @@ class App extends React.Component {
     return (
       <DaySelector
         selectedDay={this.state.selectedDay}
-        onDayClick={day => this.setState({ selectedDay: day })}
+        onDayClick={day =>
+          this.setState({ selectedDay: day, view: "schedule" })
+        }
       />
     );
   }
@@ -118,43 +92,66 @@ class App extends React.Component {
     Object.values(this.state.animeByDay).filter(shows => {
       return shows.filter(anime => {
         return anime.genres.filter(genre => {
-          return genre.name === this.state.value
-            ? showsReturned.push(anime.title)
-            : "";
+          const obj = {
+            title: anime.title,
+            imageURL: anime.image_url
+          };
+          return genre.name === this.state.value ? showsReturned.push(obj) : "";
         });
       });
     });
 
     // console.log("Results: ", showsReturned);
-    this.setState({ returned: showsReturned });
+    this.setState({ returned: showsReturned, view: "byGenre" });
   }
 
   renderGenreSelector() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <select value={this.state.value} onChange={this.handleChange}>
-          {animeGenres.map((genre, index) => (
-            <option key={genre} value={genre}>
-              {genre}
-            </option>
-          ))}
-        </select>
-        <input type="submit" value="Submit" />
-      </form>
+      // <form onSubmit={this.handleSubmit}>
+      //   <select value={this.state.value} onChange={this.handleChange}>
+      //     {animeGenres.map(genre => (
+      //       <option key={genre} value={genre}>
+      //         {genre}
+      //       </option>
+      //     ))}
+      //   </select>
+      //   <input type="submit" value="Submit" />
+      // </form>
+
+      <GenreSelector
+        stateValue={this.state.value}
+        handleChange={this.handleChange}
+        handleSubmit={this.handleSubmit}
+      />
     );
   }
 
-  // filterTest(list) {
-  //   const filtered = [];
+  renderReturnedByGenre() {
+    return this.state.returned.map(shows => {
+      return (
+        <div className={"returned"}>
+          <li>
+            <img
+              className={"coverImage"}
+              src={shows.imageURL}
+              alt={shows.title + " cover art"}
+            />
+          </li>
+          <li className={"animeTitle"}>{shows.title}</li>
+        </div>
+      );
+    });
+  }
 
-  //   list.filter(anime => {
-  //     if (anime.score > 5) {
-  //       // console.log(anime.title);
-  //       filtered.push(anime.title);
-  //       this.setState({ returned: filtered });
-  //     }
-  //   });
-  // }
+  renderAnimeCard() {
+    return this.state.animeByDay[this.state.selectedDay].map(anime => (
+      <AnimeCard
+        imageURL={anime.image_url}
+        title={anime.title}
+        genres={anime.genres}
+      />
+    ));
+  }
 
   // <a href="#" onClick={(event) => { func1(); func2();}}>Test Link</a>
 
@@ -164,30 +161,11 @@ class App extends React.Component {
         <h1 id={"logo"}>The Anime Guide</h1>
         {this.renderSelectors()} {this.renderGenreSelector()}
         <h3 id={"tagline"}>What's airing on {this.state.selectedDay}?</h3>
+        {/* <h3 id={"tagline"}>{this.state.view === "schedule" ? "What's airing on {this.state.selectedDay}" : "Lol"}</h3> */}
         <div key={"content"} className="content">
-          <ul>
-            {this.state.returned.map(shows => {
-              return <li>{shows}</li>;
-            })}
-          </ul>
+          {this.state.view === "byGenre" ? this.renderReturnedByGenre() : ""}
 
-          {this.state.animeByDay[this.state.selectedDay].map(anime => (
-            <AnimeCard
-              imageURL={anime.image_url}
-              title={anime.title}
-              genres={anime.genres}
-            />
-          ))}
-          {this.state.view === "chooseGenre" ? this.renderGenreSelector() : ""}
-          <ul>
-            {this.state.view === "chooseGenre"
-              ? this.state.returned.map(series => (
-                  <li className={"returnedByGenre"}>{series}</li>
-                ))
-              : ""}
-          </ul>
-
-          {/* <ul>{this.state.fetchCheck !== null && this.getByGenre()}</ul> */}
+          {this.state.view === "schedule" ? this.renderAnimeCard() : ""}
         </div>
       </div>
     );

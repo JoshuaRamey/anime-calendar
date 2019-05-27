@@ -29,35 +29,16 @@ const animeGenres = [
   "Supernatural"
 ];
 
+// onClick={() => onDayClick(day)}
+// onDayClick={day => this.setState({ selectedDay: day })}
+
 export default class GenreSelector extends React.Component {
-  handleChange(event) {
-    this.setState({ value: event.target.value });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-
-    const showsReturned = [];
-
-    Object.values(this.state.animeByDay).filter(shows => {
-      return shows.filter(anime => {
-        return anime.genres.filter(genre => {
-          return genre.name === this.state.value
-            ? showsReturned.push(anime.title)
-            : "";
-        });
-      });
-    });
-
-    // console.log("Results: ", showsReturned);
-    this.setState({ returned: showsReturned });
-  }
-
-  renderGenreSelector() {
+  render() {
+    const { handleChange, handleSubmit, stateValue } = this.props;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <select value={this.state.value} onChange={this.handleChange}>
-          {animeGenres.map((genre, index) => (
+      <form onSubmit={handleSubmit}>
+        <select value={stateValue} onChange={handleChange}>
+          {animeGenres.map(genre => (
             <option key={genre} value={genre}>
               {genre}
             </option>
