@@ -25,11 +25,15 @@ class App extends React.Component {
       fetchCheck: null,
       returned: [],
       checked: false,
-      value: "Action"
+      value: "Action",
+      searchValue: null
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleNameSubmit = this.handleNameSubmit.bind(this);
   }
 
   // componentDidMount() is called automatically,
@@ -54,6 +58,14 @@ class App extends React.Component {
         });
 
         console.log(this.state);
+      });
+
+    fetch("https://api.jikan.moe/v3/anime/21")
+      .then(results => {
+        return results.json();
+      })
+      .then(data => {
+        console.log(data.broadcast);
       });
   }
 
@@ -91,6 +103,16 @@ class App extends React.Component {
 
     Object.values(this.state.animeByDay).filter(shows => {
       return shows.filter(anime => {
+        // console.log(anime.mal_id);
+
+        // fetch("https://api.jikan.moe/v3/anime/" + { anime.mal_id })
+        //   .then(results => {
+        //     return results.json();
+        //   })
+        //   .then(data => {
+        //     console.log(data.broadcast);
+        //   });
+
         return anime.genres.filter(genre => {
           const obj = {
             title: anime.title,
@@ -153,13 +175,65 @@ class App extends React.Component {
     ));
   }
 
+  handleNameChange(event) {
+    this.setState({ searchValue: event.target.value });
+  }
+
+  handleNameSubmit(event) {
+    event.preventDefault();
+
+    const showsReturned = [];
+
+    Object.values(this.state.animeByDay).filter(shows => {
+      return shows.filter(anime => {
+        // return console.log(anime.title);
+
+        const obj = {
+          title: anime.title,
+          imageURL: anime.image_url
+          // genres: anime.genres.map(genre => {
+          //   return (
+          //     <button key={genre.name} className={"genres"}>
+          //       {genre.name}
+          //     </button>
+          //   );
+          // })
+        };
+
+        return anime.title
+          .toLowerCase()
+          .includes(this.state.searchValue.toLowerCase())
+          ? showsReturned.push(obj)
+          : "";
+      });
+    });
+
+    // console.log(this.state.searchValue);
+    this.setState({ returned: showsReturned, view: "byGenre" });
+  }
+
+  searchByName() {
+    return (
+      <form onSubmit={this.handleNameSubmit}>
+        <input
+          type="text"
+          name="name"
+          value={this.state.searchValue}
+          onChange={this.handleNameChange}
+        />
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+
   // <a href="#" onClick={(event) => { func1(); func2();}}>Test Link</a>
 
   render() {
     return (
       <div>
         <h1 id={"logo"}>The Anime Guide</h1>
-        {this.renderSelectors()} {this.renderGenreSelector()}
+        {this.renderSelectors()} {this.renderGenreSelector()}{" "}
+        {this.searchByName()}
         <h3 id={"tagline"}>What's airing on {this.state.selectedDay}?</h3>
         {/* <h3 id={"tagline"}>{this.state.view === "schedule" ? "What's airing on {this.state.selectedDay}" : "Lol"}</h3> */}
         <div key={"content"} className="content">
