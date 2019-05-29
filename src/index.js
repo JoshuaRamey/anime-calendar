@@ -11,7 +11,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: "schedule",
+      view: "scheduleView",
       animeByDay: {
         sunday: [],
         monday: [],
@@ -26,7 +26,7 @@ class App extends React.Component {
       returned: [],
       checked: false,
       value: "Action",
-      searchValue: null
+      searchValue: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -74,7 +74,7 @@ class App extends React.Component {
       <DaySelector
         selectedDay={this.state.selectedDay}
         onDayClick={day =>
-          this.setState({ selectedDay: day, view: "schedule" })
+          this.setState({ selectedDay: day, view: "scheduleView" })
         }
       />
     );
@@ -93,7 +93,7 @@ class App extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({ value: event.target.value });
+    this.setState({ value: event.target.value, searchValue: "" });
   }
 
   handleSubmit(event) {
@@ -124,7 +124,11 @@ class App extends React.Component {
     });
 
     // console.log("Results: ", showsReturned);
-    this.setState({ returned: showsReturned, view: "byGenre" });
+    this.setState({
+      returned: showsReturned,
+      view: "genreView",
+      searchValue: ""
+    });
   }
 
   renderGenreSelector() {
@@ -148,7 +152,7 @@ class App extends React.Component {
     );
   }
 
-  renderReturnedByGenre() {
+  renderSearchView() {
     return this.state.returned.map(shows => {
       return (
         <div className={"returned"}>
@@ -188,16 +192,17 @@ class App extends React.Component {
       return shows.filter(anime => {
         // return console.log(anime.title);
 
+        // fetch("https://api.jikan.moe/v3/anime/${anime.mal_id}")
+        //   .then(results => {
+        //     return results.json();
+        //   })
+        //   .then(data => {
+        //     console.log(data.broadcast);
+        //   });
+
         const obj = {
           title: anime.title,
           imageURL: anime.image_url
-          // genres: anime.genres.map(genre => {
-          //   return (
-          //     <button key={genre.name} className={"genres"}>
-          //       {genre.name}
-          //     </button>
-          //   );
-          // })
         };
 
         return anime.title
@@ -209,7 +214,7 @@ class App extends React.Component {
     });
 
     // console.log(this.state.searchValue);
-    this.setState({ returned: showsReturned, view: "byGenre" });
+    this.setState({ returned: showsReturned, view: "searchView" });
   }
 
   searchByName() {
@@ -234,12 +239,22 @@ class App extends React.Component {
         <h1 id={"logo"}>The Anime Guide</h1>
         {this.renderSelectors()} {this.renderGenreSelector()}{" "}
         {this.searchByName()}
-        <h3 id={"tagline"}>What's airing on {this.state.selectedDay}?</h3>
-        {/* <h3 id={"tagline"}>{this.state.view === "schedule" ? "What's airing on {this.state.selectedDay}" : "Lol"}</h3> */}
+        {this.state.view === "scheduleView" ? (
+          <h3 id={"tagline"}>What's airing on {this.state.selectedDay}?</h3>
+        ) : (
+          <h3 id={"tagline"}>
+            Results for{" "}
+            {this.state.searchValue === ""
+              ? this.state.value
+              : this.state.searchValue}
+          </h3>
+        )}
         <div key={"content"} className="content">
-          {this.state.view === "byGenre" ? this.renderReturnedByGenre() : ""}
+          {this.state.view === "searchView" || "genreView"
+            ? this.renderSearchView()
+            : ""}
 
-          {this.state.view === "schedule" ? this.renderAnimeCard() : ""}
+          {this.state.view === "scheduleView" ? this.renderAnimeCard() : ""}
         </div>
       </div>
     );
