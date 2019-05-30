@@ -2,7 +2,7 @@ import React from "react";
 
 export default class AnimeCards extends React.Component {
   render() {
-    const { title, imageURL, genres } = this.props;
+    const { title, imageURL, genres, url } = this.props;
     return (
       <div className="returned">
         <li>

@@ -44,7 +44,7 @@ export default class GenreSelector extends React.Component {
             </option>
           ))}
         </select>
-        <input type="submit" value="Submit" />
+        <input className={"submit"} type="submit" value="Submit" />
       </form>
     );
   }

@@ -24,7 +24,7 @@
   border: none;
   margin: 5px;
   width: 235px;
-  height: 445px;
+  height: 450px;
   text-align: center;
   list-style: none;
   /* flex-grow: 1; */
@@ -88,7 +88,20 @@ body {
   text-transform: capitalize;
 }
 
-.selector:hover {
+.submit {
+  margin: 10px 5px;
+  height: 20px;
+  padding: 0 15px;
+  font-size: 14px;
+  border-radius: 25px;
+  border: none;
+  color: white;
+  background-color: #0099ff;
+  text-transform: capitalize;
+}
+
+.selector:hover,
+.submit:hover {
   background-color: #61b7f0;
 }
 
@@ -100,12 +113,18 @@ body {
   background-color: #ff9494;
 }
 
-/* .returnedByGenre {
-  list-style: none;
-  border: 1px solid black;
-} */
+.malDirect {
+  text-decoration: none;
+  font-style: none;
+  color: white;
+  background-color: #0381d4;
+  font-size: 14px;
+  border: 1px solid;
+  border-radius: 50px;
+  padding: 5px;
+  margin: 10px;
+}
 
-.checkboxes {
-  border: 1px solid black;
-  margin: 5px;
+.malDirect:hover {
+  background-color: #0099ff;
 }
