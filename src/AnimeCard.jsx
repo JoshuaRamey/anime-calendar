@@ -2,21 +2,21 @@ import React from "react";
 
 export default class AnimeCards extends React.Component {
   render() {
-    const { title, imageURL, genres, url } = this.props;
+    const { title, cover, genres, id } = this.props;
     return (
-      <div className="returned">
+      <div key={id} className="returned">
         <li>
           <img
             className={"coverImage"}
-            src={imageURL}
+            src={cover}
             alt={title + " cover art"}
           />
         </li>
         <li className={"animeTitle"}>{title}</li>
         {genres.map(genre => {
           return (
-            <button key={genre.name} className={"genres"}>
-              {genre.name}
+            <button key={genre} className={"genres"}>
+              {genre}
             </button>
           );
         })}

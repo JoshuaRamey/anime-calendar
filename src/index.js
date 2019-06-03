@@ -7,11 +7,22 @@ import AnimeCard from "./AnimeCard";
 import DaySelector from "./DaySelector";
 import GenreSelector from "./GenreSelector";
 
+const daysOfWeek = [
+  "sunday",
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday"
+];
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       view: "scheduleView",
+      animeInfo: [],
       animeByDay: {
         sunday: [],
         monday: [],
@@ -45,28 +56,46 @@ class App extends React.Component {
         return results.json();
       })
       .then(data => {
-        this.setState({
-          animeByDay: {
-            sunday: data.sunday,
-            monday: data.monday,
-            tuesday: data.tuesday,
-            wednesday: data.wednesday,
-            thursday: data.thursday,
-            friday: data.friday,
-            saturday: data.saturday
-          },
-          fetchCheck: "fetched"
+        // const animeTemp = [
+        //   daysOfWeek.map(day => {
+        //     return data[day].map(series => {
+        //       // console.log(series.title + " " + [day])
+
+        //       return {
+        //         broadcast: day,
+        //         id: series.mal_id,
+        //         title: series.title,
+        //         cover: series.image_url,
+        //         genres: series.genres.map(genre => {
+        //           return genre.name;
+        //         }),
+        //         synopsis: series.synopsis
+        //       };
+        //     });
+        //   })
+        // ]
+
+        const animeTemp = [];
+
+        daysOfWeek.map(day => {
+          return data[day].map(series => {
+            const obj = {
+              broadcast: day,
+              id: series.mal_id,
+              title: series.title,
+              cover: series.image_url,
+              genres: series.genres.map(genre => {
+                return genre.name;
+              }),
+              synopsis: series.synopsis
+            };
+
+            return animeTemp.push(obj);
+          });
         });
 
-        console.log(this.state);
-      });
-
-    fetch("https://api.jikan.moe/v3/anime/21")
-      .then(results => {
-        return results.json();
-      })
-      .then(data => {
-        console.log(data.broadcast);
+        this.setState({ animeInfo: animeTemp });
+        console.log(this.state.animeInfo);
       });
   }
 
@@ -82,14 +111,8 @@ class App extends React.Component {
   }
 
   renderSchedule() {
-    return this.state.animeByDay[this.state.selectedDay].map(anime => {
-      return (
-        <AnimeCard
-          imageURL={anime.image_url}
-          title={anime.title}
-          genres={anime.genres}
-        />
-      );
+    return this.state.animeInfo.map(anime => {
+      return <AnimeCard />;
     });
   }
 
@@ -102,37 +125,18 @@ class App extends React.Component {
 
     const showsReturned = [];
 
-    Object.values(this.state.animeByDay).filter(shows => {
-      return shows.filter(anime => {
-        return anime.genres.filter(genre => {
-          const obj = {
-            title: anime.title,
-            imageURL: anime.image_url,
-            id: anime.mal_id,
-            synopsis: anime.synopsis,
-            url: anime.url,
-            broadcast: ""
-          };
-          return genre.name === this.state.value ? showsReturned.push(obj) : "";
-        });
+    this.state.animeInfo.filter(anime => {
+      return anime.genres.filter(genre => {
+        const obj = {
+          title: anime.title,
+          cover: anime.cover,
+          id: anime.id,
+          synopsis: anime.synopsis,
+          broadcast: anime.broadcast
+        };
+        return genre === this.state.value ? showsReturned.push(obj) : "";
       });
     });
-    // showsReturned.map(anime => {
-    //   return fetch("https://api.jikan.moe/v3/anime/" + anime.id)
-    //     .then(results => {
-    //       return results.json();
-    //     })
-    //     .then(data => {
-    //       // console.log(anime.title, data.broadcast);
-    //       anime.broadcast = data.broadcast;
-    //       console.log(showsReturned);
-    //       this.setState({
-    //         returned: showsReturned,
-    //         view: "genreView",
-    //         searchValue: ""
-    //       });
-    //     });
-    // });
 
     this.setState({
       returned: showsReturned,
@@ -153,15 +157,19 @@ class App extends React.Component {
   }
 
   renderAnimeCard() {
-    return this.state.animeByDay[this.state.selectedDay].map(anime => (
-      <AnimeCard
-        imageURL={anime.image_url}
-        title={anime.title}
-        genres={anime.genres}
-        url={anime.url}
-        synopsis={anime.synopsis}
-      />
-    ));
+    return this.state.animeInfo.map(anime =>
+      anime.broadcast === this.state.selectedDay ? (
+        <AnimeCard
+          cover={anime.cover}
+          title={anime.title}
+          genres={anime.genres}
+          url={anime.url}
+          synopsis={anime.synopsis}
+        />
+      ) : (
+        ""
+      )
+    );
   }
 
   handleNameChange(event) {
@@ -173,38 +181,21 @@ class App extends React.Component {
 
     const showsReturned = [];
 
-    Object.values(this.state.animeByDay).filter(shows => {
-      return shows.filter(anime => {
-        const obj = {
-          title: anime.title,
-          imageURL: anime.image_url,
-          id: anime.mal_id,
-          synopsis: anime.synopsis,
-          url: anime.url,
-          broadcast: ""
-        };
+    this.state.animeInfo.filter(anime => {
+      const obj = {
+        title: anime.title,
+        cover: anime.cover,
+        id: anime.mal_id,
+        synopsis: anime.synopsis,
+        broadcast: anime.broadcast
+      };
 
-        return anime.title
-          .toLowerCase()
-          .includes(this.state.searchValue.toLowerCase())
-          ? showsReturned.push(obj)
-          : "";
-      });
+      return anime.title
+        .toLowerCase()
+        .includes(this.state.searchValue.toLowerCase())
+        ? showsReturned.push(obj)
+        : "";
     });
-    // showsReturned.map(anime => {
-    //   return fetch("https://api.jikan.moe/v3/anime/" + anime.id)
-    //     .then(results => {
-    //       return results.json();
-    //     })
-    //     .then(data => {
-    //       // console.log(anime.title, data.broadcast);
-    //       anime.broadcast = data.broadcast;
-    //       console.log(showsReturned);
-    //       this.setState({ returned: showsReturned, view: "searchView" });
-    //     });
-    // });
-
-    // console.log(showsReturned);
 
     this.setState({
       returned: showsReturned,
@@ -234,12 +225,12 @@ class App extends React.Component {
           <li>
             <img
               className={"coverImage"}
-              src={shows.imageURL}
+              src={shows.cover}
               alt={shows.title + " cover art"}
             />
           </li>
           <li className={"animeTitle"}>{shows.title}</li>
-          {/* <p>{shows.broadcast}</p> */}
+          <li>Airs on: {shows.broadcast}</li>
         </div>
       );
     });
