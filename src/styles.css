@@ -22,12 +22,16 @@
   /* border: 2px solid black; */
   /* padding: 5px; */
   border: none;
-  margin: 5px;
-  width: 235px;
-  height: 450px;
+  margin: 10px;
+  padding: 5px;
+  /* width: 235px; */
+  width: 320x;
+  height: 345px;
   text-align: center;
   list-style: none;
   /* flex-grow: 1; */
+  border: 1px solid black;
+  border-radius: 5px;
 }
 
 .genres {
@@ -35,7 +39,7 @@
   pointer-events: none;
   background-color: #ffffff;
   border-radius: 25px;
-  padding: 4px;
+  padding: 5px;
   margin: 2px;
 }
 
@@ -46,13 +50,62 @@ body {
 }
 
 .animeTitle {
-  height: 45px;
-  margin: 5 0;
+  height: 60px;
+  width: 160px;
+  /* margin: 5 0; */
+  float: right;
+  font-weight: bold;
 }
 
-.coverImage {
+/* .coverImage {
   width: 225px;
   height: 317px;
+  float: left;
+} */
+
+.coverImage {
+  width: 160px;
+  height: 224px;
+  float: left;
+}
+
+.synopsis {
+  width: 160px;
+  height: 150px;
+  float: right;
+  text-align: left;
+  margin-left: 5px;
+  margin-top: 5px;
+  font-size: 11px;
+}
+
+.animeData {
+  height: 224px;
+  margin-left: 0;
+}
+
+.genreDiv {
+  padding-top: 15px;
+  height: 50px;
+  width: 320px;
+  text-align: center;
+}
+
+.broadcast {
+  /* font-size: 10px;
+  pointer-events: none;
+  background-color: #ffffff;
+  border-radius: 25px;
+  padding: 5px;
+  margin: 2px; */
+  border: 2px solid #0099ff;
+  border-radius: 25px;
+  padding: 5px;
+  width: 100%;
+  color: white;
+  background-color: #0099ff;
+  margin-top: 5px;
+  font-size: 15px;
 }
 
 #logo {

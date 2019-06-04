@@ -110,11 +110,11 @@ class App extends React.Component {
     );
   }
 
-  renderSchedule() {
-    return this.state.animeInfo.map(anime => {
-      return <AnimeCard />;
-    });
-  }
+  // renderSchedule() {
+  //   return this.state.animeInfo.map(anime => {
+  //     return <AnimeCard />;
+  //   });
+  // }
 
   handleChange(event) {
     this.setState({ value: event.target.value, searchValue: "" });
@@ -132,7 +132,8 @@ class App extends React.Component {
           cover: anime.cover,
           id: anime.id,
           synopsis: anime.synopsis,
-          broadcast: anime.broadcast
+          broadcast: anime.broadcast,
+          genres: anime.genres
         };
         return genre === this.state.value ? showsReturned.push(obj) : "";
       });
@@ -187,7 +188,8 @@ class App extends React.Component {
         cover: anime.cover,
         id: anime.mal_id,
         synopsis: anime.synopsis,
-        broadcast: anime.broadcast
+        broadcast: anime.broadcast,
+        genres: anime.genres
       };
 
       return anime.title
@@ -218,10 +220,28 @@ class App extends React.Component {
     );
   }
 
+  // renderSearchView() {
+  //   return this.state.returned.map(shows => {
+  //     return (
+  //       <div className={"returned"}>
+  //         <li>
+  //           <img
+  //             className={"coverImage"}
+  //             src={shows.cover}
+  //             alt={shows.title + " cover art"}
+  //           />
+  //         </li>
+  //         <li className={"animeTitle"}>{shows.title}</li>
+  //         <li>Airs on: {shows.broadcast}</li>
+  //       </div>
+  //     );
+  //   });
+  // }
+
   renderSearchView() {
     return this.state.returned.map(shows => {
       return (
-        <div className={"returned"}>
+        <div key={shows.id} className="returned">
           <li>
             <img
               className={"coverImage"}
@@ -229,8 +249,22 @@ class App extends React.Component {
               alt={shows.title + " cover art"}
             />
           </li>
-          <li className={"animeTitle"}>{shows.title}</li>
-          <li>Airs on: {shows.broadcast}</li>
+          <div className={"animeData"}>
+            <li className={"animeTitle"}>{shows.title}</li>
+            <li className={"synopsis"}>
+              {shows.synopsis.substring(0, 350)}...
+            </li>
+          </div>
+          <div className="genreDiv">
+            {shows.genres.map(genre => {
+              return (
+                <button key={genre} className={"genres"}>
+                  {genre}
+                </button>
+              );
+            })}
+            <li className={"broadcast"}>Airs on: {shows.broadcast}</li>
+          </div>
         </div>
       );
     });
