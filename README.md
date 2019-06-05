@@ -9,4 +9,4 @@ I learned a lot from this project, such as how to use an API. The way that the A
 
 
 UPDATE (June, 5):
-All functionality of the app is now finished, at this point I'm working on making changes to the UX. The UX is far from finished so excuse it's ugliness for now. Some stuff in the code also needs to be renamed for clarity, and in general I'm going to go through the code and clean things up some more.
+All functionality of the app is now finished, at this point I'm working on making changes to the UX. In general I'm going to go through the code and clean things up some more and also break some of the functions out into their own components when I get a chance.
