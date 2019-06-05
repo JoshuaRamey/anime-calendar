@@ -9,6 +9,12 @@
   box-sizing: border-box;
 }
 
+body {
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  background-color: #333333;
+}
+
 .content {
   display: flex;
   align-items: flex-start;
@@ -34,7 +40,7 @@
   border-radius: 5px;
 }
 
-.genres {
+.genreBadges {
   font-size: 10px;
   pointer-events: none;
   background-color: #ffffff;
@@ -43,10 +49,9 @@
   margin: 2px;
 }
 
-body {
-  font-family: "Raleway", sans-serif;
-  text-align: center;
-  background-color: #333333;
+.animeData {
+  height: 224px;
+  margin-left: 0;
 }
 
 .animeTitle {
@@ -57,12 +62,6 @@ body {
   font-size: 13px;
   font-weight: bold;
 }
-
-/* .coverImage {
-  width: 225px;
-  height: 317px;
-  float: left;
-} */
 
 .coverImage {
   width: 160px;
@@ -80,11 +79,6 @@ body {
   font-size: 11px;
 }
 
-.animeData {
-  height: 224px;
-  margin-left: 0;
-}
-
 .genreDiv {
   padding-top: 15px;
   height: 50px;
@@ -92,13 +86,7 @@ body {
   text-align: center;
 }
 
-.broadcast {
-  /* font-size: 10px;
-  pointer-events: none;
-  background-color: #ffffff;
-  border-radius: 25px;
-  padding: 5px;
-  margin: 2px; */
+.broadcastData {
   border: 2px solid #0099ff;
   border-radius: 25px;
   padding: 5px;
@@ -139,28 +127,6 @@ body {
   text-transform: capitalize;
 }
 
-/* .btn-group button {
-  background-color: #0099ff;
-  border: 1px solid #005b97;
-  color: white;
-  padding: 10px 24px;
-  cursor: pointer;
-}
-
-.btn-group button:not(:last-child) {
-  border-right: none;
-}
-
-.btn-group:after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-.btn-group button:hover {
-  background-color: #61b7f0;
-} */
-
 .submit {
   margin: 10px 5px;
   height: 20px;
@@ -186,28 +152,6 @@ body {
   background-color: #ff9494;
 }
 
-.malDirect {
-  text-decoration: none;
-  font-style: none;
-  color: white;
-  background-color: #0381d4;
-  font-size: 14px;
-  border: 1px solid;
-  border-radius: 50px;
-  padding: 5px;
-  margin: 10px;
-}
-
-.malDirect:hover {
-  background-color: #0099ff;
-}
-
-/* @media screen and (min-width: 100px) and (max-width: 540px) {
-  .btn-group button {
-    width: 100%;
-  }
-} */
-
 @media screen and (min-width: 100px) and (max-width: 540px) {
   .btn-group button {
     width: 35px;
@@ -224,6 +168,5 @@ body {
     visibility: visible;
     font-size: 20px;
     text-align: left;
-    /* padding: 5; */
   }
 }
