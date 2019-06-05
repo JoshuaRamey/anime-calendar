@@ -127,7 +127,7 @@ body {
   text-transform: capitalize;
 }
 
-/* .selector {
+.selector {
   margin: 10px 5px;
   height: 40px;
   padding: 0 15px;
@@ -137,31 +137,29 @@ body {
   color: white;
   background-color: #0099ff;
   text-transform: capitalize;
-} */
+}
 
-.btn-group button {
-  background-color: #0099ff; /* Green background */
-  border: 1px solid #005b97; /* Green border */
-  color: white; /* White text */
-  padding: 10px 24px; /* Some padding */
-  cursor: pointer; /* Pointer/hand icon */ /* Float the buttons side by side */
+/* .btn-group button {
+  background-color: #0099ff;
+  border: 1px solid #005b97;
+  color: white;
+  padding: 10px 24px;
+  cursor: pointer;
 }
 
 .btn-group button:not(:last-child) {
-  border-right: none; /* Prevent double borders */
+  border-right: none;
 }
 
-/* Clear floats (clearfix hack) */
 .btn-group:after {
   content: "";
   clear: both;
   display: table;
 }
 
-/* Add a background color on hover */
 .btn-group button:hover {
   background-color: #61b7f0;
-}
+} */
 
 .submit {
   margin: 10px 5px;
@@ -209,3 +207,23 @@ body {
     width: 100%;
   }
 } */
+
+@media screen and (min-width: 100px) and (max-width: 540px) {
+  .btn-group button {
+    width: 35px;
+    height: 25px;
+    border-radius: 25px;
+    font-size: 0px;
+  }
+
+  .selectorLabel {
+    visibility: hidden;
+    font-size: 0px;
+  }
+  .selectorLabel::first-letter {
+    visibility: visible;
+    font-size: 20px;
+    text-align: left;
+    /* padding: 5; */
+  }
+}
