@@ -44,7 +44,7 @@
 }
 
 body {
-  font-family: "Slabo 27px", serif;
+  font-family: "Raleway", sans-serif;
   text-align: center;
   background-color: #333333;
 }
@@ -54,6 +54,7 @@ body {
   width: 160px;
   /* margin: 5 0; */
   float: right;
+  font-size: 13px;
   font-weight: bold;
 }
 
@@ -75,7 +76,7 @@ body {
   float: right;
   text-align: left;
   margin-left: 5px;
-  margin-top: 5px;
+  margin-top: 7px;
   font-size: 11px;
 }
 
@@ -112,9 +113,6 @@ body {
   margin: 5px;
   padding: 5px;
   color: #ffffff;
-}
-
-#logo {
   font-weight: 500;
   font-size: 70px;
   font-family: "Righteous", cursive;
@@ -129,7 +127,7 @@ body {
   text-transform: capitalize;
 }
 
-.selector {
+/* .selector {
   margin: 10px 5px;
   height: 40px;
   padding: 0 15px;
@@ -139,6 +137,30 @@ body {
   color: white;
   background-color: #0099ff;
   text-transform: capitalize;
+} */
+
+.btn-group button {
+  background-color: #0099ff; /* Green background */
+  border: 1px solid #005b97; /* Green border */
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */ /* Float the buttons side by side */
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: #61b7f0;
 }
 
 .submit {
@@ -181,3 +203,9 @@ body {
 .malDirect:hover {
   background-color: #0099ff;
 }
+
+/* @media screen and (min-width: 100px) and (max-width: 540px) {
+  .btn-group button {
+    width: 100%;
+  }
+} */

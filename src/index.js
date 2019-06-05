@@ -101,12 +101,14 @@ class App extends React.Component {
 
   renderSelectors() {
     return (
-      <DaySelector
-        selectedDay={this.state.selectedDay}
-        onDayClick={day =>
-          this.setState({ selectedDay: day, view: "scheduleView" })
-        }
-      />
+      <div className="btn-group flex-wrap" data-toggle="buttons">
+        <DaySelector
+          selectedDay={this.state.selectedDay}
+          onDayClick={day =>
+            this.setState({ selectedDay: day, view: "scheduleView" })
+          }
+        />
+      </div>
     );
   }
 
