@@ -1,9 +1,11 @@
 # anime-calendar
-(WIP) A TV Guide for anime to help viewers find something to watch and keep track of what's on.
+Work in Progress
 
-The purpose of this app is to serve as a TV guide for currently-airing anime. It's a work in progress and as such there are
-some things that still need to be worked out. Currently the app needs a UX overhaul, so please excuse
-the visual mess.
+Description:
+A side project in React.JS for anime fans to easily track the weekly schedule of currently-airing anime. Users can also search by genre and by name to find something to watch or find which day a show they are interested in airs.
+
+Challenges:
+I learned a lot from this project, such as how to use an API. The way that the API returned data was extremely inconvenient for this project and through that I learned how to reshape the data that has been returned from the API. I also learned how to filter data, separate components, and how to easily create one function that maps or filters through multiple objects depending on user input. This project challenged me in many areas and it felt very rewarding to overcome those challenges and learn the proper way to do some of these tasks.
 
 
 UPDATE (June, 5):
