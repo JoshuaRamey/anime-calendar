@@ -9,6 +9,12 @@
   box-sizing: border-box;
 }
 
+body {
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  background-color: #333333;
+}
+
 .content {
   display: flex;
   align-items: flex-start;
@@ -22,46 +28,79 @@
   /* border: 2px solid black; */
   /* padding: 5px; */
   border: none;
-  margin: 5px;
-  width: 235px;
-  height: 450px;
+  margin: 10px;
+  padding: 5px;
+  /* width: 235px; */
+  width: 320x;
+  height: 345px;
   text-align: center;
   list-style: none;
   /* flex-grow: 1; */
+  border: 1px solid black;
+  border-radius: 5px;
 }
 
-.genres {
+.genreBadges {
   font-size: 10px;
   pointer-events: none;
   background-color: #ffffff;
   border-radius: 25px;
-  padding: 4px;
+  padding: 5px;
   margin: 2px;
 }
 
-body {
-  font-family: "Slabo 27px", serif;
-  text-align: center;
-  background-color: #333333;
+.animeData {
+  height: 224px;
+  margin-left: 0;
 }
 
 .animeTitle {
-  height: 45px;
-  margin: 5 0;
+  height: 60px;
+  width: 160px;
+  /* margin: 5 0; */
+  float: right;
+  font-size: 13px;
+  font-weight: bold;
 }
 
 .coverImage {
-  width: 225px;
-  height: 317px;
+  width: 160px;
+  height: 224px;
+  float: left;
+}
+
+.synopsis {
+  width: 160px;
+  height: 150px;
+  float: right;
+  text-align: left;
+  margin-left: 5px;
+  margin-top: 7px;
+  font-size: 11px;
+}
+
+.genreDiv {
+  padding-top: 15px;
+  height: 50px;
+  width: 320px;
+  text-align: center;
+}
+
+.broadcastData {
+  border: 2px solid #0099ff;
+  border-radius: 25px;
+  padding: 5px;
+  width: 100%;
+  color: white;
+  background-color: #0099ff;
+  margin-top: 5px;
+  font-size: 15px;
 }
 
 #logo {
   margin: 5px;
   padding: 5px;
   color: #ffffff;
-}
-
-#logo {
   font-weight: 500;
   font-size: 70px;
   font-family: "Righteous", cursive;
@@ -113,18 +152,21 @@ body {
   background-color: #ff9494;
 }
 
-.malDirect {
-  text-decoration: none;
-  font-style: none;
-  color: white;
-  background-color: #0381d4;
-  font-size: 14px;
-  border: 1px solid;
-  border-radius: 50px;
-  padding: 5px;
-  margin: 10px;
-}
+@media screen and (min-width: 100px) and (max-width: 540px) {
+  .btn-group button {
+    width: 30px;
+    height: 15px;
+    border-radius: 25px;
+    font-size: 0px;
+  }
 
-.malDirect:hover {
-  background-color: #0099ff;
+  .selectorLabel {
+    visibility: hidden;
+    font-size: 0px;
+  }
+  .selectorLabel::first-letter {
+    visibility: visible;
+    font-size: 15px;
+    text-align: left;
+  }
 }

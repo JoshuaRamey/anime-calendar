@@ -33,7 +33,6 @@ class App extends React.Component {
         saturday: []
       },
       selectedDay: "sunday",
-      fetchCheck: null,
       returned: [],
       checked: false,
       value: "Action",
@@ -41,40 +40,19 @@ class App extends React.Component {
       tagline: ""
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.genreSelectHandleChange = this.genreSelectHandleChange.bind(this);
+    this.genreSelectHandleSubmit = this.genreSelectHandleSubmit.bind(this);
 
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleNameSubmit = this.handleNameSubmit.bind(this);
+    this.nameSearchHandleChange = this.nameSearchHandleChange.bind(this);
+    this.nameSearchHandleSubmit = this.nameSearchHandleSubmit.bind(this);
   }
 
-  // componentDidMount() is called automatically,
-  // but it's called AFTER the render!
   componentDidMount() {
     fetch("https://api.jikan.moe/v3/schedule")
       .then(results => {
         return results.json();
       })
       .then(data => {
-        // const animeTemp = [
-        //   daysOfWeek.map(day => {
-        //     return data[day].map(series => {
-        //       // console.log(series.title + " " + [day])
-
-        //       return {
-        //         broadcast: day,
-        //         id: series.mal_id,
-        //         title: series.title,
-        //         cover: series.image_url,
-        //         genres: series.genres.map(genre => {
-        //           return genre.name;
-        //         }),
-        //         synopsis: series.synopsis
-        //       };
-        //     });
-        //   })
-        // ]
-
         const animeTemp = [];
 
         daysOfWeek.map(day => {
@@ -95,11 +73,10 @@ class App extends React.Component {
         });
 
         this.setState({ animeInfo: animeTemp });
-        console.log(this.state.animeInfo);
       });
   }
 
-  renderSelectors() {
+  renderDaySelectors() {
     return (
       <DaySelector
         selectedDay={this.state.selectedDay}
@@ -110,17 +87,11 @@ class App extends React.Component {
     );
   }
 
-  renderSchedule() {
-    return this.state.animeInfo.map(anime => {
-      return <AnimeCard />;
-    });
-  }
-
-  handleChange(event) {
+  genreSelectHandleChange(event) {
     this.setState({ value: event.target.value, searchValue: "" });
   }
 
-  handleSubmit(event) {
+  genreSelectHandleSubmit(event) {
     event.preventDefault();
 
     const showsReturned = [];
@@ -132,7 +103,8 @@ class App extends React.Component {
           cover: anime.cover,
           id: anime.id,
           synopsis: anime.synopsis,
-          broadcast: anime.broadcast
+          broadcast: anime.broadcast,
+          genres: anime.genres
         };
         return genre === this.state.value ? showsReturned.push(obj) : "";
       });
@@ -150,8 +122,8 @@ class App extends React.Component {
     return (
       <GenreSelector
         stateValue={this.state.value}
-        handleChange={this.handleChange}
-        handleSubmit={this.handleSubmit}
+        handleChange={this.genreSelectHandleChange}
+        handleSubmit={this.genreSelectHandleSubmit}
       />
     );
   }
@@ -172,11 +144,11 @@ class App extends React.Component {
     );
   }
 
-  handleNameChange(event) {
+  nameSearchHandleChange(event) {
     this.setState({ searchValue: event.target.value });
   }
 
-  handleNameSubmit(event) {
+  nameSearchHandleSubmit(event) {
     event.preventDefault();
 
     const showsReturned = [];
@@ -187,7 +159,8 @@ class App extends React.Component {
         cover: anime.cover,
         id: anime.mal_id,
         synopsis: anime.synopsis,
-        broadcast: anime.broadcast
+        broadcast: anime.broadcast,
+        genres: anime.genres
       };
 
       return anime.title
@@ -206,12 +179,12 @@ class App extends React.Component {
 
   searchByName() {
     return (
-      <form action="" onSubmit={this.handleNameSubmit}>
+      <form action="" onSubmit={this.nameSearchHandleSubmit}>
         <input
           type="search"
           placeholder="Search by series..."
           value={this.state.searchValue}
-          onChange={this.handleNameChange}
+          onChange={this.nameSearchHandleChange}
         />
         <input className="submit" type="submit" value="Submit" />
       </form>
@@ -221,7 +194,7 @@ class App extends React.Component {
   renderSearchView() {
     return this.state.returned.map(shows => {
       return (
-        <div className={"returned"}>
+        <div key={shows.id} className="returned">
           <li>
             <img
               className={"coverImage"}
@@ -229,8 +202,22 @@ class App extends React.Component {
               alt={shows.title + " cover art"}
             />
           </li>
-          <li className={"animeTitle"}>{shows.title}</li>
-          <li>Airs on: {shows.broadcast}</li>
+          <div className={"animeData"}>
+            <li className={"animeTitle"}>{shows.title}</li>
+            <li className={"synopsis"}>
+              {shows.synopsis.substring(0, 350)}...
+            </li>
+          </div>
+          <div className="genreDiv">
+            {shows.genres.map(genre => {
+              return (
+                <button key={genre} className={"genreBadges"}>
+                  {genre}
+                </button>
+              );
+            })}
+            <li className={"broadcastData"}>Airs on: {shows.broadcast}</li>
+          </div>
         </div>
       );
     });
@@ -240,7 +227,7 @@ class App extends React.Component {
     return (
       <div>
         <h1 id={"logo"}>The Anime Guide</h1>
-        {this.renderSelectors()} {this.renderGenreSelector()}{" "}
+        {this.renderDaySelectors()} {this.renderGenreSelector()}{" "}
         {this.searchByName()}
         {this.state.view === "scheduleView" ? (
           <h3 id={"tagline"}>What's airing on {this.state.selectedDay}?</h3>
