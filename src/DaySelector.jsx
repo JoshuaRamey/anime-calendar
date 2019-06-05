@@ -18,7 +18,7 @@ class DayButton extends React.Component {
         className={"selector" + (selected ? " selected" : "")}
         onClick={onClick}
       >
-        <div className="selectorLabel">{label}</div>
+        {label}
       </button>
     );
   }
