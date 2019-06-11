@@ -104,7 +104,9 @@ body {
 }
 
 .selector.selected:hover {
-  background-color: #ff9494;
+  color: #ff9494;
+  background-color: rgba(0, 151, 19, 0);
+  border: 1px solid #ff6666;
 }
 
 @media screen and (min-width: 100px) and (max-width: 540px) {
