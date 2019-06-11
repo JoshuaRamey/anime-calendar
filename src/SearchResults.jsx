@@ -43,6 +43,13 @@ const useStyles = makeStyles(theme => ({
   chip: {
     margin: 1,
     fontSize: 10
+  },
+  broadcastChip: {
+    margin: 1,
+    fontSize: 10,
+    backgroundColor: "#0099ff",
+    color: "white",
+    width: 100
   }
 }));
 
@@ -53,7 +60,15 @@ function MediaControlCard(props) {
     <Card className={classes.card}>
       <div className={classes.details}>
         <CardContent className={classes.content}>
+          <Chip
+            size="small"
+            label={props.broadcast}
+            className={classes.broadcastChip}
+          />
           <Typography className={classes.title}>{props.title}</Typography>
+          {/* <Typography variant="subtitle1" color="textSecondary">
+            Mac Miller
+          </Typography> */}
 
           <div className={classes.root}>
             {props.genres.map(genre => {

@@ -6,6 +6,7 @@ import "./styles.css";
 import AnimeCard from "./AnimeCard";
 import DaySelector from "./DaySelector";
 import GenreSelector from "./GenreSelector";
+import SearchResults from "./SearchResults";
 
 const daysOfWeek = [
   "sunday",
@@ -179,48 +180,32 @@ class App extends React.Component {
 
   searchByName() {
     return (
-      <form action="" onSubmit={this.nameSearchHandleSubmit}>
-        <input
-          type="search"
-          placeholder="Search by series..."
-          value={this.state.searchValue}
-          onChange={this.nameSearchHandleChange}
-        />
-        <input className="submit" type="submit" value="Submit" />
-      </form>
+      <div>
+        <form action="" onSubmit={this.nameSearchHandleSubmit}>
+          <input
+            type="search"
+            placeholder="Search by series..."
+            className="searchBox"
+            value={this.state.searchValue}
+            onChange={this.nameSearchHandleChange}
+          />
+          <input className="submit" type="submit" value="Search" />
+        </form>
+      </div>
     );
   }
 
-  renderSearchView() {
-    return this.state.returned.map(shows => {
-      return (
-        <div key={shows.id} className="returned">
-          <li>
-            <img
-              className={"coverImage"}
-              src={shows.cover}
-              alt={shows.title + " cover art"}
-            />
-          </li>
-          <div className={"animeData"}>
-            <li className={"animeTitle"}>{shows.title}</li>
-            <li className={"synopsis"}>
-              {shows.synopsis.substring(0, 350)}...
-            </li>
-          </div>
-          <div className="genreDiv">
-            {shows.genres.map(genre => {
-              return (
-                <button key={genre} className={"genreBadges"}>
-                  {genre}
-                </button>
-              );
-            })}
-            <li className={"broadcastData"}>Airs on: {shows.broadcast}</li>
-          </div>
-        </div>
-      );
-    });
+  renderSearchResults() {
+    return this.state.returned.map(anime => (
+      <SearchResults
+        cover={anime.cover}
+        title={anime.title}
+        genres={anime.genres}
+        url={anime.url}
+        synopsis={anime.synopsis}
+        broadcast={anime.broadcast}
+      />
+    ));
   }
 
   render() {
@@ -232,12 +217,12 @@ class App extends React.Component {
         {this.state.view === "scheduleView" ? (
           <h3 id={"tagline"}>What's airing on {this.state.selectedDay}?</h3>
         ) : (
-          <h3 id={"tagline"}>Results for {this.state.tagline}</h3>
+          <h3 id={"tagline"}>Results for "{this.state.tagline}"</h3>
         )}
         <div key={"content"} className="content">
           {this.state.view === "scheduleView"
             ? this.renderAnimeCard()
-            : this.renderSearchView()}
+            : this.renderSearchResults()}
         </div>
       </div>
     );

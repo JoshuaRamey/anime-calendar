@@ -1,5 +1,9 @@
 import React from "react";
 
+import { makeStyles } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+
 const animeGenres = [
   "Action",
   "Adventure",
@@ -29,23 +33,47 @@ const animeGenres = [
   "Supernatural"
 ];
 
-// onClick={() => onDayClick(day)}
-// onDayClick={day => this.setState({ selectedDay: day })}
+const useStyles = makeStyles(theme => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+    color: "white"
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+    color: "white"
+  },
+  button: {
+    margin: theme.spacing(1)
+  },
+  input: {
+    display: "none"
+  }
+}));
 
-export default class GenreSelector extends React.Component {
-  render() {
-    const { handleChange, handleSubmit, stateValue } = this.props;
-    return (
-      <form onSubmit={handleSubmit}>
-        <select value={stateValue} onChange={handleChange}>
+export default function NativeSelects(props) {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <form className={classes.formControl} onSubmit={props.handleSubmit}>
+        <InputLabel htmlFor="genre-native-simple" className="white">
+          Genre
+        </InputLabel>
+        <Select
+          native
+          value={props.stateValue}
+          onChange={props.handleChange}
+          className="white"
+        >
           {animeGenres.map(genre => (
-            <option key={genre} value={genre}>
+            <option className="white" key={genre} value={genre}>
               {genre}
             </option>
           ))}
-        </select>
+        </Select>
         <input className={"submit"} type="submit" value="Submit" />
       </form>
-    );
-  }
+    </div>
+  );
 }
